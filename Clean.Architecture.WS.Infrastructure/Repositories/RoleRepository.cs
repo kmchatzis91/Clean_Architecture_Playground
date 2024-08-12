@@ -1,5 +1,5 @@
 ﻿using Clean.Architecture.WS.Application.Contracts;
-using Clean.Architecture.WS.Core.Entities;
+using Clean.Architecture.WS.Domain.Entities;
 using Clean.Architecture.WS.Infrastructure.Context;
 using Microsoft.Extensions.Logging;
 using System;

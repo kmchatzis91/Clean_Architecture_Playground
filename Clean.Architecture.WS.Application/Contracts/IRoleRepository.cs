@@ -1,4 +1,4 @@
-﻿using Clean.Architecture.WS.Core.Entities;
+﻿using Clean.Architecture.WS.Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;

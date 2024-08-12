@@ -18,7 +18,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Clean.Architecture.WS.Application\Clean.Architecture.WS.Application.csproj" />
-    <ProjectReference Include="..\Clean.Architecture.WS.Core\Clean.Architecture.WS.Core.csproj" />
+    <ProjectReference Include="..\Clean.Architecture.WS.Domain\Clean.Architecture.WS.Domain.csproj" />
     <ProjectReference Include="..\Clean.Architecture.WS.Sql\Clean.Architecture.WS.Sql.csproj" />
   </ItemGroup>
 

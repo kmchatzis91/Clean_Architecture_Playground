@@ -1,5 +1,5 @@
 ﻿using Clean.Architecture.WS.Application.Contracts;
-using Clean.Architecture.WS.Core.Entities;
+using Clean.Architecture.WS.Domain.Entities;
 using Clean.Architecture.WS.Infrastructure.Context;
 using Clean.Architecture.WS.Sql.Queries;
 using Clean.Architecture.WS.Sql.Scripts;
