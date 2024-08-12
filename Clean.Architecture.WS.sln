@@ -3,15 +3,17 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.10.35013.160
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Clean.Architecture.WS.Api", "Clean.Architecture.WS.Api\Clean.Architecture.WS.Api.csproj", "{03F1EA8A-D1DC-4DDF-86FC-FA2012DD3402}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Clean.Architecture.WS.Api", "Clean.Architecture.WS.Api\Clean.Architecture.WS.Api.csproj", "{03F1EA8A-D1DC-4DDF-86FC-FA2012DD3402}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Clean.Architecture.WS.Application", "Clean.Architecture.WS.Application\Clean.Architecture.WS.Application.csproj", "{E4FEEABE-CBA0-4204-B584-45696AD259D7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Clean.Architecture.WS.Application", "Clean.Architecture.WS.Application\Clean.Architecture.WS.Application.csproj", "{E4FEEABE-CBA0-4204-B584-45696AD259D7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Clean.Architecture.WS.Infrastructure", "Clean.Architecture.WS.Infrastructure\Clean.Architecture.WS.Infrastructure.csproj", "{DD0D4035-E1DC-4DFC-B67C-91AB1234E29A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Clean.Architecture.WS.Infrastructure", "Clean.Architecture.WS.Infrastructure\Clean.Architecture.WS.Infrastructure.csproj", "{DD0D4035-E1DC-4DFC-B67C-91AB1234E29A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Clean.Architecture.WS.Core", "Clean.Architecture.WS.Core\Clean.Architecture.WS.Core.csproj", "{A0B31229-084B-41C6-BC29-D6A5A1E180A5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Clean.Architecture.WS.Core", "Clean.Architecture.WS.Core\Clean.Architecture.WS.Core.csproj", "{A0B31229-084B-41C6-BC29-D6A5A1E180A5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Clean.Architecture.WS.Sql", "Clean.Architecture.WS.Sql\Clean.Architecture.WS.Sql.csproj", "{DC3940E0-F7B3-4695-A35F-175BBA94618F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Clean.Architecture.WS.Sql", "Clean.Architecture.WS.Sql\Clean.Architecture.WS.Sql.csproj", "{DC3940E0-F7B3-4695-A35F-175BBA94618F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Clean.Architecture.WS.Domain", "Clean.Architecture.WS.Domain\Clean.Architecture.WS.Domain.csproj", "{D523C2CD-636E-44F7-9C09-03C945297878}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,10 @@ Global
 		{DC3940E0-F7B3-4695-A35F-175BBA94618F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DC3940E0-F7B3-4695-A35F-175BBA94618F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DC3940E0-F7B3-4695-A35F-175BBA94618F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D523C2CD-636E-44F7-9C09-03C945297878}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D523C2CD-636E-44F7-9C09-03C945297878}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D523C2CD-636E-44F7-9C09-03C945297878}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D523C2CD-636E-44F7-9C09-03C945297878}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
