@@ -98,10 +98,10 @@ namespace Clean.Architecture.WS.Sql.Scripts
                   E.LAST_NAME,
                   E.EMAIL,
                   E.PHONE_NUMBER,
-				  E.COMPANY_ID,
-                  C.COMPANY_NAME,
 				  E.ROLE_ID,
-                  R.ROLE_NAME
+                  R.ROLE_NAME,
+				  E.COMPANY_ID,
+                  C.COMPANY_NAME
               FROM 
                   EMPLOYEE E
               JOIN 

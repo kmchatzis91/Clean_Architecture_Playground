@@ -1,3 +1,6 @@
+using Clean.Architecture.WS.Infrastructure.Extensions;
+using Clean.Architecture.WS.Infrastructure.Mappings;
+using Dapper.FluentMap;
 
 namespace Clean.Architecture.WS.Api
 {
@@ -6,6 +9,23 @@ namespace Clean.Architecture.WS.Api
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
+
+            #region Added Services
+            // Context & Repositories
+            builder.Services.RegisterServices();
+
+            // Mappings
+            FluentMapper.Initialize(config =>
+            {
+                // entities
+                config.AddMap(new EmployeeMap());
+                config.AddMap(new CompanyMap());
+                config.AddMap(new RoleMap());
+
+                // views
+                config.AddMap(new EmployeeViewMap());
+            });
+            #endregion
 
             // Add services to the container.
 

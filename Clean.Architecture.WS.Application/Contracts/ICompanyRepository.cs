@@ -7,8 +7,5 @@ using System.Threading.Tasks;
 
 namespace Clean.Architecture.WS.Application.Contracts
 {
-    public interface ICompanyRepository : IRepository<Company>
-    {
-
-    }
+    public interface ICompanyRepository : IRepository<Company> { }
 }
