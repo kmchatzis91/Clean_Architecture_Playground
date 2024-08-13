@@ -8,7 +8,7 @@ namespace Clean.Architecture.WS.Domain.Entities
 {
     public class Company
     {
-        public decimal CompanyId { get; set; }
+        public long CompanyId { get; set; }
         public string Name { get; set; }
     }
 }

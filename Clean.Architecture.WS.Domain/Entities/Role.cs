@@ -8,7 +8,7 @@ namespace Clean.Architecture.WS.Domain.Entities
 {
     public class Role
     {
-        public decimal RoleId { get; set; }
+        public long RoleId { get; set; }
         public string Name { get; set; }
     }
 }

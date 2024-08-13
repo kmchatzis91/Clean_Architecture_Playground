@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,6 +10,7 @@ using Clean.Architecture.WS.Infrastructure.Context;
 using Clean.Architecture.WS.Sql.Queries;
 using Dapper;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 
 namespace Clean.Architecture.WS.Infrastructure.Repositories
 {
@@ -82,12 +84,66 @@ namespace Clean.Architecture.WS.Infrastructure.Repositories
             }
         }
 
-        public Task<Company> UpdateById(long id)
+        public async Task<bool> Add(Company company)
         {
-            throw new NotImplementedException();
+            try
+            {
+                _logger.LogInformation($"Add company: {JsonConvert.SerializeObject(company)}");
+
+                using (var connection = _dapperContext.CreateConnection())
+                {
+                    var parameters = new DynamicParameters();
+
+                    // input -> CompanyName
+                    parameters.Add("CompanyName", company.Name,
+                        dbType: DbType.AnsiString,
+                        direction: ParameterDirection.Input);
+
+                    var result = await connection.ExecuteAsync("INSERT_COMPANY", parameters, commandType: CommandType.StoredProcedure);
+
+                    return true;
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Add company Error, Message: {ex.Message}, StackTrace: {ex.StackTrace}");
+                return false;
+            }
         }
 
-        public Task<Company> DeleteById(long id)
+        public async Task<bool> Update(Company company)
+        {
+            try
+            {
+                _logger.LogInformation($"Update company: {JsonConvert.SerializeObject(company)}");
+
+                using (var connection = _dapperContext.CreateConnection())
+                {
+                    var parameters = new DynamicParameters();
+
+                    // input -> CompanyId
+                    parameters.Add("CompanyId", company.CompanyId,
+                        dbType: DbType.Int64,
+                        direction: ParameterDirection.Input);
+
+                    // input -> CompanyName
+                    parameters.Add("CompanyName", company.Name,
+                        dbType: DbType.AnsiString,
+                        direction: ParameterDirection.Input);
+
+                    var result = await connection.ExecuteAsync("UPDATE_COMPANY", parameters, commandType: CommandType.StoredProcedure);
+
+                    return true;
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Update company Error, Message: {ex.Message}, StackTrace: {ex.StackTrace}");
+                return false;
+            }
+        }
+
+        public Task<bool> DeleteById(long id)
         {
             throw new NotImplementedException();
         }

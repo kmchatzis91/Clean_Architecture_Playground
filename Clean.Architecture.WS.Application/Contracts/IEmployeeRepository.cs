@@ -10,7 +10,7 @@ namespace Clean.Architecture.WS.Application.Contracts
 {
     public interface IEmployeeRepository : IRepository<Employee>
     {
-        Task<List<EmployeeView>> GetAllEmployeesInformation();
-        Task<EmployeeView> GetEmployeeInformationById(long id);
+        Task<List<EmployeeView>> GetView();
+        Task<EmployeeView> GetViewById(long id);
     }
 }

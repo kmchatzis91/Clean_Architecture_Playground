@@ -20,9 +20,9 @@ namespace Clean.Architecture.WS.Sql.Scripts
                 PHONE_NUMBER NVARCHAR(50) NOT NULL,
                 ROLE_ID BIGINT NOT NULL,
                 COMPANY_ID BIGINT NOT NULL,
-                CONSTRAINT PK_EMPLOYEES PRIMARY KEY (EMPLOYEE_ID),
-                CONSTRAINT FK_EMPLOYEES_ROLE FOREIGN KEY (ROLE_ID) REFERENCES ROLE(ROLE_ID),
-                CONSTRAINT FK_EMPLOYEES_COMPANY FOREIGN KEY (COMPANY_ID) REFERENCES COMPANY(COMPANY_ID)
+                CONSTRAINT PK_EMPLOYEE PRIMARY KEY (EMPLOYEE_ID),
+                CONSTRAINT FK_EMPLOYEE_ROLE FOREIGN KEY (ROLE_ID) REFERENCES ROLE(ROLE_ID),
+                CONSTRAINT FK_EMPLOYEE_COMPANY FOREIGN KEY (COMPANY_ID) REFERENCES COMPANY(COMPANY_ID)
             );";
 
         private const string CreateTableCompany =
@@ -209,7 +209,7 @@ namespace Clean.Architecture.WS.Sql.Scripts
               AS
               BEGIN
                 -- Ensure no referential integrity issues
-                IF EXISTS (SELECT 1 FROM EMPLOYEES WHERE EMPLOYEE_ID = @EmployeeId)
+                IF EXISTS (SELECT 1 FROM EMPLOYEE WHERE EMPLOYEE_ID = @EmployeeId)
                     BEGIN
                         DELETE FROM EMPLOYEE
                         WHERE EMPLOYEE_ID = @EmployeeId;

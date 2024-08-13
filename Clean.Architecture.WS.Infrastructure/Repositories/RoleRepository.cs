@@ -4,8 +4,10 @@ using Clean.Architecture.WS.Infrastructure.Context;
 using Clean.Architecture.WS.Sql.Queries;
 using Dapper;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -82,12 +84,66 @@ namespace Clean.Architecture.WS.Infrastructure.Repositories
             }
         }
 
-        public Task<Role> UpdateById(long id)
+        public async Task<bool> Add(Role role)
         {
-            throw new NotImplementedException();
+            try
+            {
+                _logger.LogInformation($"Add role: {JsonConvert.SerializeObject(role)}");
+
+                using (var connection = _dapperContext.CreateConnection())
+                {
+                    var parameters = new DynamicParameters();
+
+                    // input -> RoleName
+                    parameters.Add("RoleName", role.Name,
+                        dbType: DbType.AnsiString,
+                        direction: ParameterDirection.Input);
+
+                    var result = await connection.ExecuteAsync("INSERT_ROLE", parameters, commandType: CommandType.StoredProcedure);
+
+                    return true;
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Add role Error, Message: {ex.Message}, StackTrace: {ex.StackTrace}");
+                return false;
+            }
         }
 
-        public Task<Role> DeleteById(long id)
+        public async Task<bool> Update(Role role)
+        {
+            try
+            {
+                _logger.LogInformation($"Update role: {JsonConvert.SerializeObject(role)}");
+
+                using (var connection = _dapperContext.CreateConnection())
+                {
+                    var parameters = new DynamicParameters();
+
+                    // input -> RoleId
+                    parameters.Add("RoleId", role.RoleId,
+                        dbType: DbType.Int64,
+                        direction: ParameterDirection.Input);
+
+                    // input -> RoleName
+                    parameters.Add("RoleName", role.Name,
+                        dbType: DbType.AnsiString,
+                        direction: ParameterDirection.Input);
+
+                    var result = await connection.ExecuteAsync("UPDATE_ROLE", parameters, commandType: CommandType.StoredProcedure);
+
+                    return true;
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Update role Error, Message: {ex.Message}, StackTrace: {ex.StackTrace}");
+                return false;
+            }
+        }
+
+        public Task<bool> DeleteById(long id)
         {
             throw new NotImplementedException();
         }

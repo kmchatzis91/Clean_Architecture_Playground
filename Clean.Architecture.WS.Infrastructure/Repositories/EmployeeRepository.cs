@@ -8,9 +8,13 @@ using Dapper;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
+using System.Net;
 using System.Text;
+using System.Text.Json.Nodes;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 
 namespace Clean.Architecture.WS.Infrastructure.Repositories
 {
@@ -84,23 +88,149 @@ namespace Clean.Architecture.WS.Infrastructure.Repositories
             }
         }
 
-        public Task<Employee> UpdateById(long id)
+        public async Task<bool> Add(Employee employee)
         {
-            throw new NotImplementedException();
+            try
+            {
+                _logger.LogInformation($"Add employee: {JsonConvert.SerializeObject(employee)}");
+
+                using (var connection = _dapperContext.CreateConnection())
+                {
+                    var parameters = new DynamicParameters();
+
+                    // input -> FirstName
+                    parameters.Add("FirstName", employee.FirstName,
+                        dbType: DbType.AnsiString,
+                        direction: ParameterDirection.Input);
+
+                    // input -> LastName
+                    parameters.Add("LastName", employee.LastName,
+                        dbType: DbType.AnsiString,
+                        direction: ParameterDirection.Input);
+
+                    // input -> Email
+                    parameters.Add("Email", employee.Email,
+                        dbType: DbType.AnsiString,
+                        direction: ParameterDirection.Input);
+
+                    // input -> PhoneNumber
+                    parameters.Add("PhoneNumber", employee.PhoneNumber,
+                        dbType: DbType.AnsiString,
+                        direction: ParameterDirection.Input);
+
+                    // input -> RoleId
+                    parameters.Add("RoleId", employee.RoleId,
+                        dbType: DbType.Int64,
+                        direction: ParameterDirection.Input);
+
+                    // input -> CompanyId
+                    parameters.Add("CompanyId", employee.CompanyId,
+                        dbType: DbType.Int64,
+                        direction: ParameterDirection.Input);
+
+                    var result = await connection.ExecuteAsync("INSERT_EMPLOYEE", parameters, commandType: CommandType.StoredProcedure);
+
+                    return true;
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Add employee Error, Message: {ex.Message}, StackTrace: {ex.StackTrace}");
+                return false;
+            }
         }
 
-        public Task<Employee> DeleteById(long id)
+        public async Task<bool> Update(Employee employee)
         {
-            throw new NotImplementedException();
+            try
+            {
+                _logger.LogInformation($"Update employee: {JsonConvert.SerializeObject(employee)}");
+
+                using (var connection = _dapperContext.CreateConnection())
+                {
+                    var parameters = new DynamicParameters();
+
+                    // input -> EmployeeId
+                    parameters.Add("EmployeeId", employee.EmployeeId,
+                        dbType: DbType.Int64,
+                        direction: ParameterDirection.Input);
+
+                    // input -> FirstName
+                    parameters.Add("FirstName", employee.FirstName,
+                        dbType: DbType.AnsiString,
+                        direction: ParameterDirection.Input);
+
+                    // input -> LastName
+                    parameters.Add("LastName", employee.LastName,
+                        dbType: DbType.AnsiString,
+                        direction: ParameterDirection.Input);
+
+                    // input -> Email
+                    parameters.Add("Email", employee.Email,
+                        dbType: DbType.AnsiString,
+                        direction: ParameterDirection.Input);
+
+                    // input -> PhoneNumber
+                    parameters.Add("PhoneNumber", employee.PhoneNumber,
+                        dbType: DbType.AnsiString,
+                        direction: ParameterDirection.Input);
+
+                    // input -> RoleId
+                    parameters.Add("RoleId", employee.RoleId,
+                        dbType: DbType.Int64,
+                        direction: ParameterDirection.Input);
+
+                    // input -> CompanyId
+                    parameters.Add("CompanyId", employee.CompanyId,
+                        dbType: DbType.Int64,
+                        direction: ParameterDirection.Input);
+
+                    var result = await connection.ExecuteAsync("UPDATE_EMPLOYEE", parameters, commandType: CommandType.StoredProcedure);
+
+                    return true;
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Update employee Error, Message: {ex.Message}, StackTrace: {ex.StackTrace}");
+                return false;
+            }
+        }
+
+        public async Task<bool> DeleteById(long id)
+        {
+            try
+            {
+                _logger.LogInformation($"Delete employee id: {id}");
+
+                using (var connection = _dapperContext.CreateConnection())
+                {
+                    var parameters = new DynamicParameters();
+
+                    // input -> EmployeeId
+                    parameters.Add("EmployeeId", id,
+                        dbType: DbType.Int64,
+                        direction: ParameterDirection.Input);
+
+                    var result = await connection.ExecuteAsync("DELETE_EMPLOYEE", parameters, commandType: CommandType.StoredProcedure);
+
+                    return true;
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Delete employee Error, Message: {ex.Message}, StackTrace: {ex.StackTrace}");
+                return false;
+            }
         }
         #endregion
 
         #region Methods Specialized
-        public async Task<List<EmployeeView>> GetAllEmployeesInformation()
+        public async Task<List<EmployeeView>> GetView()
         {
             try
             {
-                _logger.LogInformation($"GetAllEmployeesInformation");
+                _logger.LogInformation($"GetView employee");
 
                 using (var connection = _dapperContext.CreateConnection())
                 {
@@ -118,16 +248,16 @@ namespace Clean.Architecture.WS.Infrastructure.Repositories
             }
             catch (Exception ex)
             {
-                _logger.LogError($"GetAllEmployeesInformation Error, Message: {ex.Message}, StackTrace: {ex.StackTrace}");
+                _logger.LogError($"GetView employee Error, Message: {ex.Message}, StackTrace: {ex.StackTrace}");
                 return new List<EmployeeView>();
             }
         }
 
-        public async Task<EmployeeView> GetEmployeeInformationById(long id)
+        public async Task<EmployeeView> GetViewById(long id)
         {
             try
             {
-                _logger.LogInformation($"GetEmployeeInformationById");
+                _logger.LogInformation($"GetViewById employee, id: {id}");
 
                 using (var connection = _dapperContext.CreateConnection())
                 {
@@ -145,7 +275,7 @@ namespace Clean.Architecture.WS.Infrastructure.Repositories
             }
             catch (Exception ex)
             {
-                _logger.LogError($"GetEmployeeInformationById Error, Message: {ex.Message}, StackTrace: {ex.StackTrace}");
+                _logger.LogError($"GetViewById employee Error, Message: {ex.Message}, StackTrace: {ex.StackTrace}");
                 return new EmployeeView();
             }
         }

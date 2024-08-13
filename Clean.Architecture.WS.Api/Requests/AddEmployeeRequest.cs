@@ -1,14 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Clean.Architecture.WS.Domain.Entities
+﻿namespace Clean.Architecture.WS.Api.Requests
 {
-    public class Employee
+    public class AddEmployeeRequest
     {
-        public long EmployeeId { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Email { get; set; }

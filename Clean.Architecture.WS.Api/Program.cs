@@ -1,3 +1,4 @@
+using Clean.Architecture.WS.Api.Utils;
 using Clean.Architecture.WS.Infrastructure.Extensions;
 using Clean.Architecture.WS.Infrastructure.Mappings;
 using Dapper.FluentMap;
