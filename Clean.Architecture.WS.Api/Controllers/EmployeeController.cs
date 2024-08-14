@@ -3,6 +3,7 @@ using Clean.Architecture.WS.Api.Utils;
 using Clean.Architecture.WS.Application.Contracts;
 using Clean.Architecture.WS.Domain.Entities;
 using Clean.Architecture.WS.Domain.Views;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
@@ -10,6 +11,7 @@ using System.ComponentModel.Design;
 
 namespace Clean.Architecture.WS.Api.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class EmployeeController : ControllerBase
