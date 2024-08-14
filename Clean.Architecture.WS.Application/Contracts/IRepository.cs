@@ -11,8 +11,9 @@ namespace Clean.Architecture.WS.Application.Contracts
         #region Methods
         Task<List<T>> Get();
         Task<T> GetById(long id);
-        Task<T> UpdateById(long id);
-        Task<T> DeleteById(long id);
+        Task<bool> Add(T entity);
+        Task<bool> Update(T entity);
+        Task<bool> DeleteById(long id);
         #endregion
     }
 }

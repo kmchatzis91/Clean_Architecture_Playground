@@ -1,4 +1,4 @@
-﻿using Clean.Architecture.WS.Core.Entities;
+﻿using Clean.Architecture.WS.Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,8 +7,5 @@ using System.Threading.Tasks;
 
 namespace Clean.Architecture.WS.Application.Contracts
 {
-    public interface IRoleRepository : IRepository<Role>
-    {
-
-    }
+    public interface IRoleRepository : IRepository<Role> { }
 }

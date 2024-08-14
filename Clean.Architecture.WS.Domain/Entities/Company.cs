@@ -4,11 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Clean.Architecture.WS.Core.Entities
+namespace Clean.Architecture.WS.Domain.Entities
 {
-    public class Role
+    public class Company
     {
-        public decimal RoleId { get; set; }
+        public long CompanyId { get; set; }
         public string Name { get; set; }
     }
 }
