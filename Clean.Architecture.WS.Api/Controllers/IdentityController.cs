@@ -22,13 +22,18 @@ namespace Clean.Architecture.WS.Api.Controllers
         #region Fields & Properties
         private readonly IConfiguration _configuration;
         private readonly ILogger<RoleController> _logger;
+        private readonly RequestValidationService _requestValidationService;
         #endregion
 
         #region Constructor
-        public IdentityController(IConfiguration configuration, ILogger<RoleController> logger)
+        public IdentityController(
+            IConfiguration configuration,
+            ILogger<RoleController> logger,
+            RequestValidationService requestValidationService)
         {
             _configuration = configuration;
             _logger = logger;
+            _requestValidationService = requestValidationService;
         }
         #endregion
 
@@ -42,6 +47,13 @@ namespace Clean.Architecture.WS.Api.Controllers
             try
             {
                 _logger.LogInformation($"GenerateToken, request: {JsonConvert.SerializeObject(request)}");
+
+                var validations = _requestValidationService.GenerateTokenRequestValidation(request);
+
+                if (validations != Consts.Ok)
+                {
+                    return Problem(detail: validations);
+                }
 
                 var claims = new List<Claim>()
                 {
@@ -73,7 +85,7 @@ namespace Clean.Architecture.WS.Api.Controllers
 
                 return Ok(response);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return Problem();
             }

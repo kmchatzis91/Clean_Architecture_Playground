@@ -4,6 +4,63 @@ namespace Clean.Architecture.WS.Api.Utils
 {
     public class RequestValidationService
     {
+        #region IdentityController
+        public string GenerateTokenRequestValidation(GenerateTokenRequest request)
+        {
+            var errors = new List<string>();
+
+            if (request.UserId == 0)
+            {
+                errors.Add("userId");
+            }
+
+            if (string.IsNullOrWhiteSpace(request.FirstName))
+            {
+                errors.Add("firstName");
+            }
+
+            if (string.IsNullOrWhiteSpace(request.LastName))
+            {
+                errors.Add("lastName");
+            }
+
+            if (string.IsNullOrWhiteSpace(request.Email))
+            {
+                errors.Add("email");
+            }
+
+            if (errors.Count == 1)
+            {
+                return $"{errors[0]} is required!";
+            }
+
+            if (errors.Count == 2)
+            {
+                return $"{errors[0]} and {errors[1]} are required!";
+            }
+
+            if (errors.Count > 2)
+            {
+                var allErrors = "";
+
+                foreach (var e in errors)
+                {
+                    if (e == errors.Last())
+                    {
+                        allErrors += $"and {e}";
+                        break;
+                    }
+
+                    allErrors += $"{e}, ";
+                }
+
+                return $"{allErrors} are required!";
+            }
+
+            return Consts.Ok;
+        }
+        #endregion
+
         #region EmployeeController
         public string AddEmployeeRequestValidation(AddEmployeeRequest request)
         {
