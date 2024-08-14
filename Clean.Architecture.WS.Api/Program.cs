@@ -2,6 +2,9 @@ using Clean.Architecture.WS.Api.Utils;
 using Clean.Architecture.WS.Infrastructure.Extensions;
 using Clean.Architecture.WS.Infrastructure.Mappings;
 using Dapper.FluentMap;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 namespace Clean.Architecture.WS.Api
 {
@@ -19,21 +22,45 @@ namespace Clean.Architecture.WS.Api
             builder.Services.AddScoped<RequestValidationService>();
 
             // Mappings
-            FluentMapper.Initialize(config =>
+            FluentMapper.Initialize(options =>
             {
                 // entities
-                config.AddMap(new EmployeeMap());
-                config.AddMap(new CompanyMap());
-                config.AddMap(new RoleMap());
+                options.AddMap(new EmployeeMap());
+                options.AddMap(new CompanyMap());
+                options.AddMap(new RoleMap());
 
                 // views
-                config.AddMap(new EmployeeViewMap());
+                options.AddMap(new EmployeeViewMap());
             });
             #endregion
 
             // Add services to the container.
-
             builder.Services.AddControllers();
+
+            // Add for Jwt Auth
+            builder.Services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+            }).AddJwtBearer(options =>
+            {
+                options.TokenValidationParameters = new TokenValidationParameters()
+                {
+                    ValidIssuer = builder.Configuration["JwtSettings:Issuer"],
+                    ValidAudience = builder.Configuration["JwtSettings:Audience"],
+                    IssuerSigningKey = new SymmetricSecurityKey(
+                        Encoding.UTF8.GetBytes(builder.Configuration["JwtSettings:Key"])),
+                    ValidateIssuer = true,
+                    ValidateAudience = true,
+                    ValidateLifetime = true,
+                    ValidateIssuerSigningKey = true
+                };
+            });
+
+            // Add for Jwt Auth
+            builder.Services.AddAuthorization();
+
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
@@ -49,8 +76,11 @@ namespace Clean.Architecture.WS.Api
 
             app.UseHttpsRedirection();
 
-            app.UseAuthorization();
+            // Add for Jwt Auth
+            app.UseAuthentication();
 
+            // Add for Jwt Auth
+            app.UseAuthorization();
 
             app.MapControllers();
 
