@@ -15,6 +15,9 @@ namespace Clean.Architecture.WS.Api
             // Context & Repositories
             builder.Services.RegisterServices();
 
+            // Services
+            builder.Services.AddScoped<RequestValidationService>();
+
             // Mappings
             FluentMapper.Initialize(config =>
             {

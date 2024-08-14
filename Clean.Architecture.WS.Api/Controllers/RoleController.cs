@@ -17,14 +17,20 @@ namespace Clean.Architecture.WS.Api.Controllers
         private readonly IConfiguration _configuration;
         private readonly ILogger<RoleController> _logger;
         private readonly IUnitOfWork _unitOfWork;
+        private readonly RequestValidationService _requestValidationService;
         #endregion
 
         #region Constructor
-        public RoleController(IConfiguration configuration, ILogger<RoleController> logger, IUnitOfWork unitOfWork)
+        public RoleController(
+            IConfiguration configuration, 
+            ILogger<RoleController> logger, 
+            IUnitOfWork unitOfWork,
+            RequestValidationService requestValidationService)
         {
             _configuration = configuration;
             _logger = logger;
             _unitOfWork = unitOfWork;
+            _requestValidationService = requestValidationService;
         }
         #endregion
 
@@ -61,7 +67,7 @@ namespace Clean.Architecture.WS.Api.Controllers
             {
                 _logger.LogInformation($"AddRole, request: {JsonConvert.SerializeObject(request)}");
 
-                var validations = AddRoleRequestValidation(request);
+                var validations = _requestValidationService.AddRoleRequestValidation(request);
 
                 if (validations != Consts.Ok)
                 {
@@ -98,7 +104,7 @@ namespace Clean.Architecture.WS.Api.Controllers
             {
                 _logger.LogInformation($"UpdateRole, request: {JsonConvert.SerializeObject(request)}");
 
-                var validations = UpdateRoleRequestValidation(request);
+                var validations = _requestValidationService.UpdateRoleRequestValidation(request);
 
                 if (validations != Consts.Ok)
                 {
@@ -128,90 +134,7 @@ namespace Clean.Architecture.WS.Api.Controllers
         #endregion
 
         #region Validations
-        private string AddRoleRequestValidation(AddRoleRequest request)
-        {
-            var errors = new List<string>();
 
-            if (string.IsNullOrWhiteSpace(request.Name))
-            {
-                errors.Add("name");
-            }
-
-            if (errors.Count == 1)
-            {
-                return $"{errors[0]} is required!";
-            }
-
-            if (errors.Count == 2)
-            {
-                return $"{errors[0]} and {errors[1]} are required!";
-            }
-
-            if (errors.Count > 2)
-            {
-                var allErrors = "";
-
-                foreach (var e in errors)
-                {
-                    if (e == errors.Last())
-                    {
-                        allErrors += $"and {e}";
-                        break;
-                    }
-
-                    allErrors += $"{e}, ";
-                }
-
-                return $"{allErrors} are required!";
-            }
-
-            return Consts.Ok;
-        }
-
-        private string UpdateRoleRequestValidation(UpdateRoleRequest request)
-        {
-            var errors = new List<string>();
-
-            if (request.RoleId == 0)
-            {
-                errors.Add("roleId");
-            }
-
-            if (string.IsNullOrWhiteSpace(request.Name))
-            {
-                errors.Add("name");
-            }
-
-            if (errors.Count == 1)
-            {
-                return $"{errors[0]} is required!";
-            }
-
-            if (errors.Count == 2)
-            {
-                return $"{errors[0]} and {errors[1]} are required!";
-            }
-
-            if (errors.Count > 2)
-            {
-                var allErrors = "";
-
-                foreach (var e in errors)
-                {
-                    if (e == errors.Last())
-                    {
-                        allErrors += $"and {e}";
-                        break;
-                    }
-
-                    allErrors += $"{e}, ";
-                }
-
-                return $"{allErrors} are required!";
-            }
-
-            return Consts.Ok;
-        }
         #endregion
     }
 }
